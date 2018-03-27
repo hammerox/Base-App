@@ -10,7 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.mcustodio.baseapp.R
 import com.mcustodio.baseapp.model.example.Example
-import kotlinx.android.synthetic.main.activity_counter.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.dialog_counter.view.*
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_counter)
+        setContentView(R.layout.activity_main)
         setButtonClickListener()
         setRecyclerView()
         observeCounter()
@@ -55,9 +55,9 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setRecyclerView() {
-        list_counter_resistances.layoutManager = LinearLayoutManager(this)
-        list_counter_resistances.adapter = counterAdapter
-        ViewCompat.setNestedScrollingEnabled(list_counter_resistances, false)
+        list_counter.layoutManager = LinearLayoutManager(this)
+        list_counter.adapter = counterAdapter
+        ViewCompat.setNestedScrollingEnabled(list_counter, false)
         counterAdapter.onItemClick = onCardItemClick
         counterAdapter.onItemLongClick = onCardItemLongClick
     }
@@ -71,24 +71,24 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun observeResistanceList() {
-        viewModel.resistances.observe(this, Observer {
+        viewModel.examples.observe(this, Observer {
             it?.let { counterAdapter.data = it }
         })
     }
 
 
-    private val onCardItemClick : ((Example) -> Unit) = { resistance ->
-        askForDescription(resistance)
+    private val onCardItemClick : ((Example) -> Unit) = { example ->
+        askForDescription(example)
     }
 
 
-    private val onCardItemLongClick : ((Example) -> Unit) = { resistance ->
+    private val onCardItemLongClick : ((Example) -> Unit) = { example ->
         val options = listOf("Deletar")
         MaterialDialog.Builder(this)
                 .items(options)
                 .itemsCallback { _, _, position, _ ->
                     when (position) {
-                        0 -> viewModel.delete(resistance)
+                        0 -> viewModel.delete(example)
                     }
                 }
                 .show()

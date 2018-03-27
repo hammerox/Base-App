@@ -1,4 +1,4 @@
-package com.mcustodio.baseapp.repository.resistance
+package com.mcustodio.baseapp.repository.example
 
 import android.content.Context
 import com.mcustodio.baseapp.model.example.Example
@@ -8,7 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 
 
-class ResistanceRepository(context: Context) : BaseRepository(context) {
+class ExampleRepository(context: Context) : BaseRepository(context) {
 
 
     fun getDatabase() : Flowable<List<Example>> {

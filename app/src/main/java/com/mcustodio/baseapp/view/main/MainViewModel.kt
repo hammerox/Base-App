@@ -5,22 +5,22 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
 import com.mcustodio.baseapp.model.example.Example
-import com.mcustodio.baseapp.repository.resistance.ResistanceRepository
+import com.mcustodio.baseapp.repository.example.ExampleRepository
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
 
     var counter : LiveData<Int>
-    var resistances : LiveData<List<Example>>
+    var examples: LiveData<List<Example>>
 
-    private val repository by lazy { ResistanceRepository(app) }
+    private val repository by lazy { ExampleRepository(app) }
 
 
 
     init {
         val resistanceFlow = repository.getDatabase()
         counter = LiveDataReactiveStreams.fromPublisher(resistanceFlow.map { it.size })
-        resistances = LiveDataReactiveStreams.fromPublisher(resistanceFlow)
+        examples = LiveDataReactiveStreams.fromPublisher(resistanceFlow)
     }
 
 
